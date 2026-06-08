@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌙 Dark Theme Base */
+body {
+  @apply bg-black text-white font-sans;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a; /* zinc-800 */
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Input Base Styling */
+input,
+textarea,
+select {
+  @apply bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-sm outline-none focus:border-blue-500;
+}
+
+/* Button Reset */
+button {
+  @apply focus:outline-none;
+}

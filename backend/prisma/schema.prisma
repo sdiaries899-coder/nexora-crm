@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// USER
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  role         String   @default("USER")
+  isVerified   Boolean  @default(false)
+  refreshToken String?
+
+  cards        Card[]
+  comments     Comment[]
+  rejections   RejectedCard[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// OTP
+model Otp {
+  email     String   @id
+  code      String
+  expiresAt DateTime
+}
+
+// COMPANY
+model Company {
+  id        String   @id @default(uuid())
+  name      String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// STAGE (KANBAN)
+model Stage {
+  id        String   @id @default(uuid())
+  name      String
+  order     Int      @unique
+
+  cards     Card[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// CARD
+model Card {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+
+  stageId     String
+  userId      String
+
+  stage       Stage    @relation(fields: [stageId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
+  comments    Comment[]
+  rejections  RejectedCard[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// COMMENT
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+
+  cardId    String
+  userId    String
+
+  card      Card     @relation(fields: [cardId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+// REJECTED CARD
+model RejectedCard {
+  id        String   @id @default(uuid())
+  reason    String
+
+  cardId    String
+  userId    String
+
+  card      Card     @relation(fields: [cardId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
