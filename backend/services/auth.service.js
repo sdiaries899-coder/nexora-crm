@@ -41,7 +41,14 @@ export const registerUser = serviceHandler(async ({ email, password }) => {
 
   logger.info("User registered", { userId: user.id });
 
-  return user;
+  return {
+    id:user.id,
+    email:user.email,
+    role:user.role,
+    isVerified:user.isVerified,
+  };
+
+
 });
 
 /**
@@ -65,28 +72,39 @@ export const loginUser = serviceHandler(async ({ email, password }) => {
     logger.warn("Login failed - wrong password", { email });
     throw new AppError("Invalid credentials", 401);
   }
-
-  if (!user.isVerified) {
-    await sendOTPService(email);
-    logger.warn("Login blocked - not verified", { email });
-    throw new AppError("Email not verified. OTP sent.", 403);
-  }
-
-  const payload = { id: user.id, role: user.role };
-
-  const accessToken = generateAccessToken(payload);
-  const refreshToken = generateRefreshToken(payload);
-
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { refreshToken },
+  await sendOTPService(email);
+  logger.info("Login OTP send", {
+    userId:user.id,
   });
 
-  logger.info("Login success", { userId: user.id });
+  return{
+    email:user.email,
+    otpRequired:true,
 
-  return { accessToken, refreshToken, user };
+  };
+
+  // ///
+  // if (!user.isVerified) {
+  //   await sendOTPService(email);
+  //   logger.warn("Login blocked - not verified", { email });
+  //   throw new AppError("Email not verified. OTP sent.", 403);
+  // }
+
+  // const payload = { id: user.id, role: user.role };
+
+  // const accessToken = generateAccessToken(payload);
+  // const refreshToken = generateRefreshToken(payload);
+
+  // await prisma.user.update({
+  //   where: { id: user.id },
+  //   data: { refreshToken },
+  // });
+
+  // logger.info("Login success", { userId: user.id });
+
+  // return { accessToken, refreshToken, user };
 });
-
+///
 /**
  * @desc Refresh Token
  */

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { showError } from "../../utils/toast";
+import { showError, showSuccess } from "../../utils/toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,10 +30,18 @@ const Login = () => {
 
     try {
       setLoading(true);
-      await login(form);
-      navigate("/");
+      const res = await login(form);
+      showSuccess(res?.message || "OTP send successfully");
+      navigate("/verify-login",{
+        state:{
+          email:form.email,
+        },
+
+      });
     } catch (err) {
       showError(err?.response?.data?.message || "Login failed");
+      navigate("/register");
+      return;
     } finally {
       setLoading(false);
     }

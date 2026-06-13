@@ -4,7 +4,7 @@ frontend/node_modules/
 
 dist/
 build/
-
+git commit -m "Initial Nexora CRM Deployment"
 .env
 backend/.env
 frontend/.env

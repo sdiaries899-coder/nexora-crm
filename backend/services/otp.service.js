@@ -4,6 +4,7 @@ import AppError from "../utils/AppError.js";
 import { logger } from "../utils/logger.js";
 import { OTP_EXPIRY_MINUTES } from "../utils/constants.js";
 import { serviceHandler } from "../utils/serviceHandler.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 
 /**
  * @desc Generate 6-digit OTP
@@ -68,8 +69,7 @@ export const verifyOTPService = serviceHandler(async (email, otp) => {
   if (new Date() > record.expiresAt) {
     throw new AppError("OTP expired", 400);
   }
-
-  await prisma.user.update({
+  const user = await prisma.user.update({
     where: { email },
     data: { isVerified: true },
   });
@@ -78,7 +78,34 @@ export const verifyOTPService = serviceHandler(async (email, otp) => {
     where: { email },
   });
 
-  logger.info("OTP verified", { email });
+  const payload = {
+    id:user.id,
+    role:user.role,
+  };
+  const accessToken=generateAccessToken(payload);
+  const refreshToken=generateRefreshToken(payload);
+  await prisma.update({
+    where:{
+      id:user.id,
+    },
+    data:{
+      refreshToken,
+    },
+  });
 
-  return true;
+  return{
+    accessToken,
+    refreshToken,
+    user:{
+      id:user.id,
+      email:user.email,
+      role:useReducer.role,
+      isVerified:true,
+      
+    },
+  };
+});
+
+export const resendOTPService = serviceHandler(async(email)=>{
+  return await sendOTPService(email);
 });

@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API from "../../services/api";
 import { showSuccess, showError } from "../../utils/toast";
+import { useAuth } from "../../context/AuthContext";
 
 const VerifyLogin = () => {
   const navigate = useNavigate();
+  const {fetchUser} = useAuth();
+  const location = useLocation();
+
 
   const [form, setForm] = useState({
     email: "",
@@ -35,13 +39,32 @@ const VerifyLogin = () => {
       setLoading(true);
 
       const res = await API.post("/otp/verify", form);
-
       showSuccess(res?.data?.message || "Login verified");
-
-      navigate("/login");
+      await fetchUser();
+      navigate("/");
     } catch (err) {
       showError(err?.response?.data?.message || "Verification failed");
     } finally {
+      setLoading(false);
+    }
+    
+  };
+  const handleResend = async() => {
+    if(!form.email){
+      return showError("Email reqiured");
+
+    }
+    try {
+      setLoading(true);
+      await API.post("/otp/send",{
+        email:form.email,
+
+      });
+      
+    } catch (err) {
+      showError(err?.response?.date?.message || "Failed to resend the OTP");
+      
+    }finally{
       setLoading(false);
     }
   };

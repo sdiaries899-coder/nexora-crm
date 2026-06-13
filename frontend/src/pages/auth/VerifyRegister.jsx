@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import API from "../../services/api";
 import { showSuccess, showError } from "../../utils/toast";
+import { useAuth } from "../../context/AuthContext";
 
 const VerifyRegister = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const{fetchUser} = useAuth();
 
   const [form, setForm] = useState({
     email: "",
@@ -47,6 +49,7 @@ const VerifyRegister = () => {
       const res = await API.post("/otp/verify", form);
 
       showSuccess(res?.data?.message || "Verification successful");
+      await fetchUser
 
       navigate("/login");
     } catch (err) {
