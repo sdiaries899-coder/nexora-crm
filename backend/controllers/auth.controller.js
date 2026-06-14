@@ -11,40 +11,27 @@ import { setAuthCookies, clearAuthCookies } from "../utils/cookies.js";
 import { sendSuccess } from "../utils/response.js";
 
 /**
- * @desc Register
+ * @desc Register + Send OTP
  */
 export const register = asyncHandler(async (req, res) => {
   const user = await registerUser(req.body);
 
-  return sendSuccess(res, "Registered successfully", {
+  return sendSuccess(res, "Registered successfully. OTP sent to email.", {
     id: user.id,
     email: user.email,
-    role:user.role,
-    isVerified:user.isVerified,
-
+    role: user.role,
+    isVerified: user.isVerified,
   });
 });
 
 /**
- * @desc Login
+ * @desc Login Step 1 - Validate credentials + Send OTP
  */
 export const login = asyncHandler(async (req, res) => {
   const data = await loginUser(req.body);
-  return sendSuccess(res,"OTP send to email",data);
 
+  return sendSuccess(res, "OTP sent to email. Please verify login.", data);
 });
-//   const { accessToken, refreshToken, user } = await loginUser(
-//     req.body
-//   );
-
-//   setAuthCookies(res, accessToken, refreshToken);
-
-//   return sendSuccess(res, "Login successful", {
-//     id: user.id,
-//     email: user.email,
-//     role: user.role,
-//   });
-// });
 
 /**
  * @desc Refresh Token
@@ -91,7 +78,7 @@ export const changePassword = asyncHandler(async (req, res) => {
     newPassword: req.body.newPassword,
   });
 
-  clearAuthCookies(res); // force re-login
+  clearAuthCookies(res);
 
   return sendSuccess(res, "Password changed successfully");
 });
