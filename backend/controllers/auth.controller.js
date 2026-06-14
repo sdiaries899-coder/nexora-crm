@@ -19,6 +19,9 @@ export const register = asyncHandler(async (req, res) => {
   return sendSuccess(res, "Registered successfully", {
     id: user.id,
     email: user.email,
+    role:user.role,
+    isVerified:user.isVerified,
+
   });
 });
 
@@ -26,18 +29,22 @@ export const register = asyncHandler(async (req, res) => {
  * @desc Login
  */
 export const login = asyncHandler(async (req, res) => {
-  const { accessToken, refreshToken, user } = await loginUser(
-    req.body
-  );
+  const data = await loginUser(req.body);
+  return sendSuccess(res,"OTP send to email",data);
 
-  setAuthCookies(res, accessToken, refreshToken);
-
-  return sendSuccess(res, "Login successful", {
-    id: user.id,
-    email: user.email,
-    role: user.role,
-  });
 });
+//   const { accessToken, refreshToken, user } = await loginUser(
+//     req.body
+//   );
+
+//   setAuthCookies(res, accessToken, refreshToken);
+
+//   return sendSuccess(res, "Login successful", {
+//     id: user.id,
+//     email: user.email,
+//     role: user.role,
+//   });
+// });
 
 /**
  * @desc Refresh Token

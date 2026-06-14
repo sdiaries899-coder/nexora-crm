@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import API from "../../services/api";
 import { showSuccess, showError } from "../../utils/toast";
@@ -6,9 +6,8 @@ import { useAuth } from "../../context/AuthContext";
 
 const VerifyLogin = () => {
   const navigate = useNavigate();
-  const {fetchUser} = useAuth();
   const location = useLocation();
-
+  const { fetchUser } = useAuth();
 
   const [form, setForm] = useState({
     email: "",
@@ -16,6 +15,15 @@ const VerifyLogin = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.email) {
+      setForm((prev) => ({
+        ...prev,
+        email: location.state.email,
+      }));
+    }
+  }, [location.state]);
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -39,32 +47,35 @@ const VerifyLogin = () => {
       setLoading(true);
 
       const res = await API.post("/otp/verify", form);
+
       showSuccess(res?.data?.message || "Login verified");
+
       await fetchUser();
+
       navigate("/");
     } catch (err) {
       showError(err?.response?.data?.message || "Verification failed");
     } finally {
       setLoading(false);
     }
-    
   };
-  const handleResend = async() => {
-    if(!form.email){
-      return showError("Email reqiured");
 
+  const handleResend = async () => {
+    if (!form.email) {
+      return showError("Email required");
     }
+
     try {
       setLoading(true);
-      await API.post("/otp/send",{
-        email:form.email,
 
+      await API.post("/otp/send", {
+        email: form.email,
       });
-      
+
+      showSuccess("OTP resent successfully");
     } catch (err) {
-      showError(err?.response?.date?.message || "Failed to resend the OTP");
-      
-    }finally{
+      showError(err?.response?.data?.message || "Failed to resend OTP");
+    } finally {
       setLoading(false);
     }
   };
@@ -82,7 +93,7 @@ const VerifyLogin = () => {
           name="email"
           placeholder="Email"
           value={form.email}
-          onChange={handleChange}
+          readOnly
           className="w-full p-2 rounded bg-zinc-800"
         />
 
@@ -101,6 +112,15 @@ const VerifyLogin = () => {
           className="w-full bg-blue-600 p-2 rounded"
         >
           {loading ? "Verifying..." : "Verify OTP"}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleResend}
+          disabled={loading}
+          className="w-full bg-blue-600 p-2 rounded"
+        >
+          Resend OTP
         </button>
       </form>
     </div>

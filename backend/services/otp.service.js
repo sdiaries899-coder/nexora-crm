@@ -23,6 +23,7 @@ export const sendOTPService = serviceHandler(async (email) => {
   if (!user) throw new AppError("User not found", 404);
 
   const otp = generateOTP();
+  const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES*60*1000);
 
   await prisma.otp.upsert({
     where: { email },
