@@ -143,121 +143,71 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
-      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-10 items-center">
+      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-8 items-center">
         
-        {/* Left Side */}
         <div className="hidden md:block space-y-6">
-          <img
-            src={logo}
-            alt="Udyogkart"
-            className="w-72"
-          />
+          <img src={logo} alt="Udyogkart" className="w-64" />
 
           <div>
-            <h1 className="text-5xl font-bold leading-tight">
+            <h1 className="text-4xl font-bold">
               Powering Udyogkart Sales & Operations
             </h1>
-
-            <p className="text-gray-400 text-lg mt-4">
-              Manage Leads, Procurement & Customer Relationships
-              from a Single Platform.
+            <p className="text-gray-400 mt-3">
+              Manage Leads, Enquiries, Procurement & Customer Relationships from One Platform
             </p>
           </div>
 
-          <div className="space-y-4 text-gray-300">
-            <div>✓ Lead & Enquiry Management</div>
-            <div>✓ Customer Follow-ups & Activities</div>
-            <div>✓ Procurement & Vendor Tracking</div>
-            <div>✓ Business Performance Dashboard</div>
-            <div>✓ Real-time Reports & Analytics</div>
+          <div className="space-y-3 text-gray-300">
+            <p>✓ Lead & Enquiry Management</p>
+            <p>✓ Sales Pipeline Tracking</p>
+            <p>✓ Procurement & Vendor Management</p>
+            <p>✓ Reports & Performance Dashboard</p>
           </div>
 
-          {/* <div className="grid grid-cols-3 gap-4 pt-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
-              <h3 className="text-2xl font-bold text-cyan-400">
-                25K+
-              </h3>
-              <p className="text-xs text-gray-400">
-                SKUs Managed
-              </p>
-            </div>
-
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
-              <h3 className="text-2xl font-bold text-cyan-400">
-                5K+
-              </h3>
-              <p className="text-xs text-gray-400">
-                Customers
-              </p>
-            </div>
-
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
-              <h3 className="text-2xl font-bold text-cyan-400">
-                PAN
-              </h3>
-              <p className="text-xs text-gray-400">
-                India Network
-              </p>
-            </div>
-          </div> */}
-
-          <p className="text-sm text-cyan-400">
-            Connecting Sales, Procurement & Operations
+          <p className="text-sm text-yellow-400">
+            "Connecting Sales, Procurement and Operations in One Platform"
           </p>
         </div>
 
-        {/* Register Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 w-full max-w-md mx-auto shadow-2xl"
+          className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl w-full max-w-sm mx-auto space-y-4 shadow-xl"
         >
-          <div className="text-center mb-6">
-            <img
-              src={logo}
-              alt="Udyogkart"
-              className="w-48 mx-auto mb-4"
-            />
-
-            <h2 className="text-3xl font-bold">
-              Create Account
-            </h2>
-
-            <p className="text-gray-400 mt-2">
-              Register to access Udyogkart CRM
+          <div className="text-center space-y-2">
+            <img src={logo} alt="Udyogkart" className="w-44 mx-auto" />
+            <h2 className="text-2xl font-semibold">Create Account</h2>
+            <p className="text-sm text-gray-400">
+              Register to access your CRM
             </p>
           </div>
 
-          <div className="space-y-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-cyan-500 outline-none"
-            />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 outline-none focus:border-cyan-500"
+          />
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Create password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-cyan-500 outline-none"
-            />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 outline-none focus:border-cyan-500"
+          />
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-cyan-600 hover:bg-cyan-500 p-3 rounded-lg font-semibold transition"
-            >
-              {loading
-                ? "Creating Account..."
-                : "Register"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-cyan-600 hover:bg-cyan-500 disabled:opacity-60 p-3 rounded-lg font-medium"
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
 
-          <p className="text-sm text-center text-gray-400 mt-6">
+          <p className="text-sm text-center text-gray-400">
             Already have an account?{" "}
             <span
               className="text-cyan-400 cursor-pointer hover:underline"
