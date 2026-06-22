@@ -144,22 +144,22 @@ const Login = () => {
 
           <div>
             <h1 className="text-4xl font-bold">
-              Metals Procurement Made Simple
+              Powering Udyogkart Sales & Operations
             </h1>
             <p className="text-gray-400 mt-3">
-              B2B tech-enabled platform for MSMEs and corporates.
+              Manage Leads, Enquiries, Procurement & Customer Relationships from One Platform
             </p>
           </div>
 
           <div className="space-y-3 text-gray-300">
-            <p>✓ 25000+ metal SKUs</p>
-            <p>✓ Procurement, Finance & Logistics</p>
-            <p>✓ Delivery across India</p>
-            <p>✓ Customised metal products available</p>
+            <p>✓ Lead & Enquiry Management</p>
+            <p>✓ Sales Pipeline Tracking</p>
+            <p>✓ Procurement & Vendor Management</p>
+            <p>✓ Reports & Performance Dashboard</p>
           </div>
 
           <p className="text-sm text-yellow-400">
-            Use code BULK on your first bulk order
+            "Connecting Sales, Procurement and Operations in One Platform"
           </p>
         </div>
 
