@@ -155,7 +155,7 @@ const Register = () => {
 
           <div>
             <h1 className="text-5xl font-bold leading-tight">
-              Udyogkart CRM
+              Powering Udyogkart Sales & Operations
             </h1>
 
             <p className="text-gray-400 text-lg mt-4">
@@ -168,12 +168,11 @@ const Register = () => {
             <div>✓ Lead & Enquiry Management</div>
             <div>✓ Customer Follow-ups & Activities</div>
             <div>✓ Procurement & Vendor Tracking</div>
-            <div>✓ Team Collaboration</div>
             <div>✓ Business Performance Dashboard</div>
             <div>✓ Real-time Reports & Analytics</div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 pt-4">
+          {/* <div className="grid grid-cols-3 gap-4 pt-4">
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
               <h3 className="text-2xl font-bold text-cyan-400">
                 25K+
@@ -200,7 +199,7 @@ const Register = () => {
                 India Network
               </p>
             </div>
-          </div>
+          </div> */}
 
           <p className="text-sm text-cyan-400">
             Connecting Sales, Procurement & Operations
