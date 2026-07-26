@@ -201,11 +201,20 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <p className="text-sm text-center text-gray-400">
+          {/* <p className="text-sm text-center text-gray-400">
             Don&apos;t have an account?{" "}
             <span
               className="text-cyan-400 cursor-pointer hover:underline"
               onClick={() => navigate("/register")}
+            >
+              Register
+            </span>
+          </p> */}
+          <p className="text-sm text-center text-gray-400">
+            pls click to enter main page?{" "}
+            <span
+              className="text-cyan-400 cursor-pointer hover:underline"
+              onClick={() => navigate("/")}
             >
               Register
             </span>
