@@ -96,9 +96,9 @@
 
 // export default Login;
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { useState } from "react"; // this us used to store the email and password etc
+import { useNavigate } from "react-router-dom";// user to navigate between pages
+import useAuth from "../../hooks/useAuth"; // function of this line is useAuth under authprovide and read data using useAuth from AuthContext
 import { showError, showSuccess } from "../../utils/toast";
 import logo from "../../assets/logo.png";
 

@@ -1,8 +1,11 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";//routes n route are the compoenent of react lib 
+// routes act as container 
+// route has url path for each react component
 
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+//its check user is login or not and redirect non login in user to login page
 
-// Auth Pages
+// Auth Pages 
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import VerifyLogin from "../pages/auth/VerifyLogin";
@@ -21,10 +24,12 @@ import Rejected from "../pages/rejection/Rejected";
 import ImportExport from "../pages/importExport/ImportExport";
 
 const AppRoutes = () => {
+//the approutes in functional component where routes is container is defined
   return (
+// this are below route are the [public] route user can access this route even if no login 
     <Routes>
       {/* Public */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login />} /> {/*path can add last componenet to to the url and element can give which react component to display on screen */}
       <Route path="/register" element={<Register />} />
       <Route path="/verify-login" element={<VerifyLogin />} />
       <Route path="/verify-register" element={<VerifyRegister />} />
